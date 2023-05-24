@@ -2,5 +2,6 @@ archive/
 latest.zip
 .env/
 test.py
+Eval/files/*
 assets/images/*
 assets/masks/*
