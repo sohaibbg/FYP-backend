@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "ee09284d-c17f-42b3-8f20-b18ac15a3827",
+		"name": "FYP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "vectorize (unused)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/sohaib/Downloads/sig(1).png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/enqueue-vectorization",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"enqueue-vectorization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "maskify",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "img",
+							"type": "file",
+							"src": "/home/sohaib/dev/projects/uni/fyp/Eval/assets/test/test_0.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/maskify",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"maskify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "orient-and-crop",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "img",
+							"type": "file",
+							"src": "/home/sohaib/dev/projects/uni/fyp/signature-verification/test.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/orient-and-crop",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"orient-and-crop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ssim-index",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "img1",
+							"type": "file",
+							"src": "/home/sohaib/dev/projects/uni/fyp/ssim/assets/test/real1.png"
+						},
+						{
+							"key": "img2",
+							"type": "file",
+							"src": "/home/sohaib/dev/projects/uni/fyp/ssim/assets/test/real2.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/ssim-index",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"ssim-index"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
