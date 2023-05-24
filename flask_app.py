@@ -7,7 +7,7 @@ from base64 import encodebytes
 import numpy as np
 import cv2
 import os
-from Eval.single_eval import img_to_mask
+from Eval.single_eval import img_to_mask, save_mask
 app = Flask(__name__)
 
 
@@ -96,12 +96,18 @@ def upload():
     # process img
     mask = img_to_mask(img)
 
-    # encode
-    buffer = cv2.imencode(img_extension, mask)[1]
-    io_buf = BytesIO(buffer)
-    io_buf.seek(0)
+    mask_path = 'assets\masks\mask.png'
+    save_mask(mask, mask_path)
 
-    return send_file(io_buf, 'image', download_name=f'mask.{img_extension}')
+    image_path = mask_path
+    # Read the image
+    img = cv2.imread(image_path)
+    # Encode the image
+    img_encoded = cv2.imencode('.png', img)[1].tobytes()
+    # Convert to a file-like object
+    img_io = BytesIO(img_encoded)
+    # Return as a response
+    return send_file(img_io, mimetype='image/png')
 
 
 if __name__ == '__main__':

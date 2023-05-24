@@ -1,2 +1,6 @@
 archive/
 latest.zip
+.env/
+test.py
+assets/images/*
+assets/masks/*

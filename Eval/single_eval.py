@@ -12,6 +12,8 @@ from Eval.data import create_dir
 from Eval.load_data import load_data
 
 import os
+
+from Utils.file_path import get_directory_path
 # os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 """Global Variables"""
@@ -20,6 +22,12 @@ W = 1024
 
 
 def save_mask(mask, path):
+    """Getting Directory to save the mask image"""
+    dir_path = get_directory_path(path)
+
+    """Create Directory for storing files"""
+    create_dir(dir_path)
+
     # Ensuring mask is in the range 0-255 (as uint8)
     result = (mask * 255).astype('uint8')
 
@@ -30,7 +38,6 @@ def save_mask(mask, path):
     # cv2.imshow('img', mask_inv)
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
-
 
 
 def save_before_after(image, mask, y_pred, save_image_path):
@@ -48,6 +55,7 @@ def save_before_after(image, mask, y_pred, save_image_path):
     # save_image_path = f"assets/results/before_after/{name}.png"
     cv2.imwrite(save_image_path, cat_image)
 
+
 def convert_4_channel_to_3(img):
     # Check if the image has an alpha channel
     if img.shape[2] == 4:
@@ -60,6 +68,7 @@ def convert_4_channel_to_3(img):
         return img_3_channel
 
     return img
+
 
 def maskify(img, model):
     """Testing new Images"""
@@ -94,6 +103,7 @@ def init_model():
         model = tf.keras.models.load_model("Eval/files/save_model.h5")
 
     return model
+
 
 def img_to_mask(img):
     """takes cv2 image or filepath, returns cv2 image"""

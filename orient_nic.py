@@ -7,6 +7,7 @@ def create_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
+
 def orient_nic_img(img):
     # params
     per = 25
@@ -15,7 +16,7 @@ def orient_nic_img(img):
     # # open target img
     # img = cv2.imread(img_path)
     # open calibration img
-    calibration_img = cv2.imread('calibrated.jpeg')
+    calibration_img = cv2.imread('assets\calibrated.jpeg')
 
     # calibration object
     orb = cv2.ORB_create(5000)
@@ -24,7 +25,7 @@ def orient_nic_img(img):
     kp1, des1 = orb.detectAndCompute(calibration_img, None)
     # initialize calibratee
     kp2, des2 = orb.detectAndCompute(img, None)
-    
+
     matches = bf.match(des2, des1)
 
     """Prints the matches in the console"""
@@ -70,9 +71,11 @@ def orient_nic_img(img):
     #     create_dir('results/')
     #     cv2.imwrite('results/' + "newImg.jpeg", placeToPutSign_mask)
 
+
 def main():
     img = orient_nic_img('test.jpeg')
-    display_img(img)
+    # display_img(img)
+
 
 if __name__ == '__main__':
     main()
