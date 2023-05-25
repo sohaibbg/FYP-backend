@@ -100,7 +100,7 @@ def init_model():
 
     """Loading the Model"""
     with CustomObjectScope({'iou': iou, 'dice_coef': dice_coef, 'dice_loss': dice_loss}):
-        model = tf.keras.models.load_model("Eval/files/save_model.h5")
+        model = tf.keras.models.load_model("Eval/files/new_save_model.h5")
 
     return model
 

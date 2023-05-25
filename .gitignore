@@ -4,4 +4,7 @@ latest.zip
 test.py
 Eval/files/*
 assets/images/*
+assets/cnic_database/*
 assets/masks/*
+test_similarity.py
+consin_similarity.py

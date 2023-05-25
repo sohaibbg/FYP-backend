@@ -19,8 +19,8 @@ def greyscale_and_remove_whitespace(image):
 
 
 def ssim_index(img1, img2):
-    img1 = cv2.resize(img1, (100, 100))
-    img2 = cv2.resize(img2, (100, 100))
+    img1 = cv2.resize(img1, (400, 400))
+    img2 = cv2.resize(img2, (400, 400))
 
     # output displayed as a double number
     index = ssim(img1, img2, channel_axis=-1)
