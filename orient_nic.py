@@ -16,7 +16,8 @@ def orient_nic_img(img):
     # # open target img
     # img = cv2.imread(img_path)
     # open calibration img
-    calibration_img = cv2.imread('assets\calibrated.jpeg')
+    calibration_path = os.path.join('assets', 'calibrated.jpeg')
+    calibration_img = cv2.imread(calibration_path)
 
     # calibration object
     orb = cv2.ORB_create(5000)

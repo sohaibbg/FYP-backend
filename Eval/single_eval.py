@@ -96,11 +96,14 @@ def init_model():
 
     """Create Directory for storing files"""
     # create_dir("assets/results/before_after")
-    create_dir("Eval/assets/results/masks")
-
+    path = os.path.join('Eval', 'assets', 'results', 'masks')
+    create_dir(path)
+    # create_dir("Eval/assets/results/masks")
+    model_path = os.path.join('Eval', 'files', 'save_model.h5')
     """Loading the Model"""
     with CustomObjectScope({'iou': iou, 'dice_coef': dice_coef, 'dice_loss': dice_loss}):
-        model = tf.keras.models.load_model("Eval/files/save_model.h5")
+        model = tf.keras.models.load_model(model_path)
+        # model = tf.keras.models.load_model("Eval/files/save_model.h5")
 
     return model
 

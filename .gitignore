@@ -5,3 +5,7 @@ test.py
 Eval/files/*
 assets/images/*
 assets/masks/*
+assets/cnic_database/*
+consin_similarity.py
+test_similarity.py
+```
