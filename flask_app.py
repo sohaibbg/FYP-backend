@@ -11,6 +11,11 @@ from Eval.single_eval import img_to_mask, save_mask
 app = Flask(__name__)
 
 
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+
 @app.route('/extractMask', methods=['POST'])
 def extract():
     # receive img into string data
@@ -47,4 +52,6 @@ def extract():
 
 
 if __name__ == '__main__':
+    """Essa App"""
+    os.chdir('~/FYP-backend')
     app.run(debug=True)

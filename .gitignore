@@ -8,4 +8,7 @@ assets/masks/*
 assets/cnic_database/*
 consin_similarity.py
 test_similarity.py
+Eval/test_models/*
+app.yaml
+.gcloudignore
 ```
