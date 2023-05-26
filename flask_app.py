@@ -4,15 +4,19 @@ from normalize_nic import orient, crop
 from orient_nic import orient_nic_img
 from io import BytesIO
 from base64 import encodebytes
+from PIL import Image
 import numpy as np
 import cv2
 import os
+from lib.main import model1
 from Eval.single_eval import img_to_mask
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/ssim-index', methods=['POST'])
-def post_ssim_index():
+def ssim_index_api():
     # receive img into string data
     img1 = request.files['img1']
     img_extension = os.path.splitext(img1.filename)[1]
@@ -37,8 +41,8 @@ def post_ssim_index():
     return {'response': str(index)}
 
 
-@app.route('/orient-and-crop', methods=['POST'])
-def orient_crop():
+@app.route('/extractMask', methods=['POST'])
+def extractMask():
     # receive img into string data
     img = request.files['img']
     img_extension = os.path.splitext(img.filename)[1]
@@ -50,17 +54,71 @@ def orient_crop():
     # process img
     oriented_img = orient(img)
     cropped_img = crop(oriented_img)
+    # remove bg
+    img = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2RGB)
+    img = Image.fromarray(img)
+    img = model1(img)
+    img = np.array(img)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
+    buffer = cv2.imencode(img_extension, img)[1]
+    io_buf = BytesIO(buffer)
+    io_buf.seek(0)
+
+    return send_file(io_buf, 'image', download_name=f'oriented.{img_extension}')
+
+    # # encode
+    # buffer1 = cv2.imencode(img_extension, oriented_img)[1]
+    # buffer1 = encodebytes(BytesIO(buffer1).getvalue()).decode('ascii')
+    # buffer2 = cv2.imencode(img_extension, cropped_img)[1]
+    # buffer2 = encodebytes(BytesIO(buffer2).getvalue()).decode('ascii')
+
+    # return jsonify({
+    #     "oriented": buffer1,
+    #     'cropped': buffer2
+    # })
+
+
+@app.route('/orient', methods=['POST'])
+def orient_api():
+    # receive img into string data
+    img = request.files['img']
+    img_extension = os.path.splitext(img.filename)[1]
+    img_str = img.read()
+    # convert string data to numpy array
+    file_bytes = np.frombuffer(img_str, np.uint8)
+    # convert numpy array to image
+    img = cv2.imdecode(file_bytes, cv2.IMREAD_UNCHANGED)
+    # process img
+    oriented_img = orient(img)
+    # cropped_img = crop(oriented_img)
     # encode
-    buffer1 = cv2.imencode(img_extension, oriented_img)[1]
-    buffer1 = encodebytes(BytesIO(buffer1).getvalue()).decode('ascii')
-    buffer2 = cv2.imencode(img_extension, cropped_img)[1]
-    buffer2 = encodebytes(BytesIO(buffer2).getvalue()).decode('ascii')
+    buffer = cv2.imencode(img_extension, oriented_img)[1]
+    io_buf = BytesIO(buffer)
+    io_buf.seek(0)
 
-    return jsonify({
-        "oriented": buffer1,
-        'cropped': buffer2
-    })
+    return send_file(io_buf, 'image', download_name=f'oriented.{img_extension}')
+
+@app.route('/crop', methods=['POST'])
+def crop_api():
+    # receive img into string data
+    img = request.files['img']
+    img_extension = os.path.splitext(img.filename)[1]
+    img_str = img.read()
+    # convert string data to numpy array
+    file_bytes = np.frombuffer(img_str, np.uint8)
+    # convert numpy array to image
+    img = cv2.imdecode(file_bytes, cv2.IMREAD_UNCHANGED)
+    # process img
+    cropped_img = crop(img)
+    # cropped_img = crop(oriented_img)
+    # encode
+    buffer = cv2.imencode(img_extension, cropped_img)[1]
+    io_buf = BytesIO(buffer)
+    io_buf.seek(0)
+
+    return send_file(io_buf, 'image', download_name=f'cropped.{img_extension}')
+
 
 # @app.route('/orient', methods=['POST'])
 # def orient():
