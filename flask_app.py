@@ -65,7 +65,7 @@ def extractMask():
     io_buf = BytesIO(buffer)
     io_buf.seek(0)
 
-    return send_file(io_buf, 'image', download_name=f'oriented.{img_extension}')
+    return send_file(io_buf, 'image', download_name='oriented'+img_extension)
 
     # # encode
     # buffer1 = cv2.imencode(img_extension, oriented_img)[1]
@@ -98,6 +98,7 @@ def orient_api():
     io_buf.seek(0)
 
     return send_file(io_buf, 'image', download_name=f'oriented.{img_extension}')
+
 
 @app.route('/crop', methods=['POST'])
 def crop_api():
